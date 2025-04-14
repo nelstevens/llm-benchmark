@@ -1,60 +1,52 @@
 import os
 import re
-import sys
-# Set the directory containing your .txt files
-input_dir = sys.argv[1]
-output_file = input_dir + "/output.md"  # Optional: Write all markdown tables to this file
 
-# Regular expression pattern to parse key-value pairs
-pattern = re.compile(r'^(.*?):\s+(.*)$')
+def extract_model_name_and_rates(filepath):
+    eval_rates = []
+    model_name = None
 
-# Expected keys in order
-headers = [
-    "total duration", "load duration", "prompt eval count", "prompt eval duration",
-    "prompt eval rate", "eval count", "eval duration", "eval rate"
-]
+    with open(filepath, 'r') as file:
+        for line in file:
+            if model_name is None and line.startswith("model_name"):
+                match = re.search(r'model_name\s*=\s*(.+)', line)
+                if match:
+                    model_name = match.group(1).strip()
 
-# Store markdown output
-markdown_output = []
+            if line.strip().startswith("eval rate:"):
+                match = re.search(r'eval rate:\s+([\d.]+)\s+tokens/s', line)
+                if match:
+                    eval_rates.append(float(match.group(1)))
 
-# Loop through all txt files in the directory
-for filename in sorted(os.listdir(input_dir)):
-    if filename.endswith(".log"):
-        filepath = os.path.join(input_dir, filename)
-        with open(filepath, 'r') as f:
-            lines = [line.strip() for line in f if line.strip()]
-        
-        # Extract model name from the first line
-        model_name_line = lines.pop(0)
-        model_name = model_name_line.split('=')[1].strip()
+    return model_name or os.path.basename(filepath), eval_rates
 
-        rows = []
-        row = []
+def average(numbers):
+    return sum(numbers) / len(numbers) if numbers else 0
 
-        for line in lines:
-            match = pattern.match(line)
-            if match:
-                key, value = match.groups()
-                if key in headers:
-                    row.append(value)
-                    if len(row) == len(headers):
-                        rows.append(row)
-                        row = []
+def main():
+    directory = './macmini'  # Change if needed
+    output_file = './macmini/averages.md'
+    files = [f for f in os.listdir(directory) if f.endswith('.log')]
+    results = []
 
-        # Add table for current file/model
-        markdown_output.append(f"### Model: {model_name} (File: {filename})\n")
-        markdown_output.append("| " + " | ".join(headers) + " |")
-        markdown_output.append("|" + "|".join(["---"] * len(headers)) + "|")
-        for row in rows:
-            markdown_output.append("| " + " | ".join(row) + " |")
-        markdown_output.append("\n")  # Add space between tables
+    for filename in sorted(files):
+        filepath = os.path.join(directory, filename)
+        model_name, rates = extract_model_name_and_rates(filepath)
+        avg = average(rates)
+        results.append((model_name, len(rates), avg))
 
-# Output to console or write to file
-# Print to console:
-print("\n".join(markdown_output))
+    # Build the Markdown table
+    table_lines = [
+        "| Model Name | # of Eval Rates | Average Eval Rate (tokens/s) |",
+        "|------------|------------------|-------------------------------|"
+    ]
+    for model_name, count, avg in results:
+        table_lines.append(f"| {model_name} | {count} | {avg:.2f} |")
 
-# Optional: write to file
-with open(output_file, 'w') as out:
-    out.write("\n".join(markdown_output))
+    # Write to Markdown file
+    with open(output_file, 'w') as f:
+        f.write("\n".join(table_lines))
 
-print(f"\nMarkdown tables saved to: {output_file}")
+    print(f"Markdown table written to: {output_file}")
+
+if __name__ == '__main__':
+    main()

@@ -1,11 +1,3 @@
-# LLM Benchmark
-
-## Get started 
-TBD
-
-## Results
-
-## Macmini
 | Model Name | # of Eval Rates | Average Eval Rate (tokens/s) |
 |------------|------------------|-------------------------------|
 | deepseek-r1:1.5b | 5 | 122.44 |
