@@ -5,6 +5,8 @@ TBD
 
 ## Results
 
+Find some videos of example prompts [here](https://app.clickup.com/t/86c32ythz) to see how responsive model are.
+
 ## Macmini
 | Model Name | # of Eval Rates | Average Eval Rate (tokens/s) |
 |------------|------------------|-------------------------------|
