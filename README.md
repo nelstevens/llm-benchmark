@@ -8,6 +8,7 @@ TBD
 Find some videos of example prompts [here](https://app.clickup.com/t/86c32ythz) to see how responsive model are.
 
 ## Macmini
+specs: 14CPU's (ARM64) 20GPU's, 64G memory
 | Model Name | # of Eval Rates | Average Eval Rate (tokens/s) |
 |------------|------------------|-------------------------------|
 | deepseek-r1:1.5b | 5 | 122.44 |
@@ -16,7 +17,7 @@ Find some videos of example prompts [here](https://app.clickup.com/t/86c32ythz) 
 | deepseek-r1:7b | 5 | 42.68 |
 
 ## aws-t2-med
-specs: 2 vCPU's, 4 G memory
+specs: 2 vCPU's (i386), 4G memory
 
 | Model Name | # of Eval Rates | Average Eval Rate (tokens/s) |
 |------------|------------------|-------------------------------|
