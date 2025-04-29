@@ -36,7 +36,8 @@ specs: 2 vCPU's (x86), 8G memory
 | deepseek-r1:7b | 5 | 2.66 |
 
 ## aws-t2-xlarge
-specs: 8 vCPU's (x86), 32G memory
+specs: 8 vCPU's (x86), 32G memory  
+Note: For some reason the small models kept crashing. try again later.
 
 | Model Name | # of Eval Rates | Average Eval Rate (tokens/s) |
 |------------|------------------|-------------------------------|
