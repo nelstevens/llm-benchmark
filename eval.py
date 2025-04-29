@@ -23,8 +23,8 @@ def average(numbers):
     return sum(numbers) / len(numbers) if numbers else 0
 
 def main():
-    directory = './macmini'  # Change if needed
-    output_file = './macmini/averages.md'
+    directory = './aws-t2-xlarge'  # Change if needed
+    output_file = './aws-t2-xlarge/averages.md'
     files = [f for f in os.listdir(directory) if f.endswith('.log')]
     results = []
 

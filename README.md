@@ -34,3 +34,11 @@ specs: 2 vCPU's (x86), 8G memory
 | gemma3:1b | 5 | 10.38 |
 | gemma3:4b | 5 | 4.27 |
 | deepseek-r1:7b | 5 | 2.66 |
+
+## aws-t2-xlarge
+specs: 8 vCPU's (x86), 32G memory
+
+| Model Name | # of Eval Rates | Average Eval Rate (tokens/s) |
+|------------|------------------|-------------------------------|
+| gemma3:4b | 5 | 7.26 |
+| deepseek-r1:7b | 5 | 5.64 |
